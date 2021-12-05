@@ -11,26 +11,33 @@ typedef long long ll;
 int main(){
     vector < int > hash(1000,0);
     string text;
+    string ignore;
     float count = 0;
     float tot=0;
     float tat=0;
- 
+    bool br = false;
  
     ifstream file("in.txt");              // Source Text
     ifstream bfile("out.txt");            // Plagiarized Text
- 
+    ifstream igfile("ignore.txt");        // Ignore Text
  
     while (file >> text)
     {
-        tot++;   
         int t=0;
         int m = text.length();
- 
  
         if(text[m-1]=='s' || text[m-1] == 'S'){            // omitting s from text (example toys and toy)
             m=m-1;
         }
- 
+        
+        while(igfile >> ignore){                           // ignoring commen text
+            if(text == ignore){
+                br = true;
+            }
+        }
+        if(br) continue;
+
+        tot++;   
  
         for (int i = 0; i < m; i++)
         {   
